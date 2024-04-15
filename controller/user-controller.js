@@ -46,10 +46,14 @@ const login = async (req,res) =>{
         // const user = await userExist.comparePassword(password)
 
         if (userExist) {
+            // const userData = req.user;
+            // console.log(userData);
             res.status(201).json({
                 message: "Voter found",
                 // token: await userExist.generateToken(),
-                userId: userExist._id
+                userId: userExist._id,
+                state:userExist.state,
+                constituency:userExist.constituency,
             })
         }else{
             res.status(401).json({message: "Invalid credential"})
@@ -64,7 +68,7 @@ const login = async (req,res) =>{
 const user = async(req,res) => {
     try {
         const userData = req.user;
-        // console.log(userData);
+        console.log(userData);
         return res.status(200).json({userData})
     } catch (error) {
         console.log(`Error from the user route: ${error}`);

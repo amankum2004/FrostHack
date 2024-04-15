@@ -15,8 +15,10 @@ app.use(cors(corsOptions))
 
 app.use(express.json())
 app.use("/api/auth",authRoute)
-app.use(errorMiddleware)
+// app.use("api/form",userInfoRoute);
 
+
+app.use(errorMiddleware)
 
 const PORT = 27017
 connectDB().then(()=>{

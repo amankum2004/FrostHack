@@ -6,7 +6,7 @@ const validate = (schema) => async (req,res,next) => {
     } catch (err) {
         const status = 422;
         const message = "Fill all the inputs properly"
-        // const extraDetails = err.errors[0].message;
+        const extraDetails = err.errors[0].message;
         // const message = err.errors[0].message;
         const error = {
             status,
