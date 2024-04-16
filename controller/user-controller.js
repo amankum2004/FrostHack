@@ -10,22 +10,25 @@ const home = async(req,res) => {
 
 const register = async(req,res) => {
     try {
-        const {voterId,state,constituency} = req.body;
+        const {voterId,state,constituency,password} = req.body;
         const userExist = await User.findOne({voterId}) 
         if(userExist){
             return res.status(400).json({message: "Voter Id already exists"})
         }
 
+        const saltRound = 10;
+        const hash_password = await bcrypt.hash(password,saltRound)
         const userCreated =  await User.create({
             voterId,
+            password:hash_password,
             state,
-            constituency
+            constituency,
         });
 
         console.log(req.body)
         res.status(201).json({
             message: "Registration successful",
-            // token: await userCreated.generateToken(),
+            token: await userCreated.generateToken(),
             userId: userCreated._id
         })
     } catch (error) {
@@ -43,14 +46,12 @@ const login = async (req,res) =>{
             })
         }
         // const user = await bcrypt.compare(password,userExist.password);
-        // const user = await userExist.comparePassword(password)
+        const user = await userExist.comparePassword(password)
 
-        if (userExist) {
-            // const userData = req.user;
-            // console.log(userData);
+        if (user) {
             res.status(201).json({
                 message: "Voter found",
-                // token: await userExist.generateToken(),
+                token: await userExist.generateToken(),
                 userId: userExist._id,
                 state:userExist.state,
                 constituency:userExist.constituency,

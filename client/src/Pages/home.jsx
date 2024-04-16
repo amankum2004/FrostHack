@@ -31,7 +31,7 @@ const handleSubmit = async(e) => {
     e.preventDefault();
     // console.log(user)
     try {
-        const response = await fetch(`${API}/api/auth/login`,{
+        const response = await fetch(`${API}/api/auth/user`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json",
@@ -47,7 +47,7 @@ const handleSubmit = async(e) => {
             // STORE THE TOKEN IN LOCALHOST
             storeTokenInLS(res_data.token);
             // localStorage.setItem("token",res_data.token);
-            setUser({email:"",password:""})
+            setUser({voterId:"",password:""})
             toast.success("Login successful")
             navigate("/")
         }else{
@@ -82,7 +82,7 @@ const handleSubmit = async(e) => {
         required/>
       </div>
       <div className="form-group">
-        <label htmlFor="voter-id"><h3>Password</h3></label>
+        <label htmlFor="password"><h3>Password</h3></label>
         <input type="text" 
         className="form-control" 
         id="password" 
